@@ -1,0 +1,4 @@
+Warning: Duplicate directory name: /usr/local/MLR2008a/toolbox/local.
+Not all CPUs are enabled.
+sh: ifconfig: command not found
+mcc -o 'fastParallelCalcSensitivityColumn' -W 'main' -d '/home/lpang/work/zame/fastSMat/' -T 'link:exe' -R -nojvm -R -nodisplay -N '/home/lpang/work/zame/fastSMat/fastParallelCalcSensitivityColumn.m' -a '/home/lpang/work/zame/fastSMat/fastGenerateSMatrix.m' -a '/home/lpang/work/zame/fastSMat/fastParallelCalcSensitivityMatrix.m' 
