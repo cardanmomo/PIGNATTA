@@ -38,8 +38,7 @@ addpath('/home/athorn/FIESTA', '-end');
 
 %add LP routines for S matrix
 addpath('/home/lpang/work/zameDEV', '-end');
-addpath('/home/cmoreno/FIESTA/2016', '-end');
-addpath('/home/cmoreno/FIESTA/smatrices', '-end');
+addpath('/home/cmoreno/work/2016/', '-end');  % Equilibria folder
 set(0, 'DefaultFigureWindowStyle', 'docked')
 beep on
 

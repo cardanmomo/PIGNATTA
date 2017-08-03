@@ -74,7 +74,7 @@ conn_len=[len_3d_ol, len_3d_olx, fx];
 % Get the strike points via intersections
 [x_btm, y_btm]=intersect(psi_equil, psib, plate);
 [x_top, y_top]=intersect(psi_equil, psib, plate_up);
-limit=0.0005;
+limit=0.0004;
 low_div_psi=interp2(psin, x_btm, y_btm);
 upp_div_psi=interp2(psin, x_top, y_top);
 x_btm=x_btm(abs(low_div_psi-0.9999) < limit);

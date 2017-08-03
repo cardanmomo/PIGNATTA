@@ -66,8 +66,8 @@ z1=data(:, 2)'/1e3;
 
 
 if nargout == 0
-	line(r1, z1,0*z1,'Color','w', 'Linewidth', 2);
-	line(r1, -z1,0*z1,'Color','w', 'Linewidth', 2);
+	line(r1, z1,0*z1,'Color','k', 'Linewidth', 2);
+	line(r1, -z1,0*z1,'Color','k', 'Linewidth', 2);
 end
 
 target=struct('r', r1, 'z', z1);
