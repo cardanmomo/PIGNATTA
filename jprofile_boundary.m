@@ -20,7 +20,7 @@
 %uno_b = [-0.559373, 8.0325, -26.2932, 31.0162];
 
 load Super_X_2014_P4_CATIA.mat         % 1MA, Li: 0.68
-uno_a = [2073268.84788, -18104482.9291, 51863189.2098, -47897676.2426];
+uno_a = [0.20732688478800  -1.81044829291000   5.18631892098000  -4.78976762426000] *1e7;
 uno_b = [-1.39852, 20.0825, -65.737, 77.5454];
 
 %load high_li_sxd_2014coils              % 1MA, Li: 1.08
@@ -47,19 +47,19 @@ sensor_bulkboundary=fiesta_sensor_isoflux('shape', [rc]', [zc]');
 
 % Get x-points
 [x_control, y_control, conn_len] = control_pointsV3(equil);
-xpt=fiesta_point('Xpt', x_control(4), y_control(4));
-xpt2=fiesta_point('Xpt2', x_control(3), y_control(3));
+xpt=fiesta_point('Xpt', x_control(3), y_control(3));
+xpt2=fiesta_point('Xpt2', x_control(4), y_control(4));
 % And create B sensors on them
 sensor_br=fiesta_sensor_br(xpt);
 sensor_br2=fiesta_sensor_br(xpt2);
 sensor_bz=fiesta_sensor_bz(xpt);
 sensor_bz2=fiesta_sensor_bz(xpt2);
 % Now create sensors in strike points
-sensor_in_strike=fiesta_sensor_isoflux('st_in', [x_control(3), x_control(5)]', ...
+sensor_in_strike=fiesta_sensor_isoflux('st_in', [x_control(3), x_control(5)]', ...  % Change to 4 for High Li
 										[y_control(3), y_control(5)]');
-sensor_out_strike=fiesta_sensor_isoflux('st_out', [x_control(3), x_control(6)]', ...
-										[y_control(3), y_control(6)]');
-sensor_fx=fiesta_sensor_isoflux('fx', [x_control(2),0.85]', [y_control(2),-1.905]');
+sensor_divertor=fiesta_sensor_isoflux('divertor', [1.3172, x_control(6)]', ...
+										[-1.9572, y_control(6)]');
+sensor_nose=fiesta_sensor_isoflux('nose', [x_control(3), 0.70859]', [y_control(3),-1.6078]');
 
 %get the locations along the inner and outer divertor legs
 psin=get(equil, 'Psi_n');
@@ -70,7 +70,7 @@ zv_leg=lcfs(2,:);
 loc=(zv_leg < y_control(3) & rv_leg > x_control(3) & rv_leg < x_control(6) & zv_leg > -2);
 rv_ol=rv_leg(loc);
 zv_ol=zv_leg(loc);
-loc2=(zv_leg < y_control(3) & rv_leg < x_control(3) & zv_leg > y_control(5));
+loc2=(zv_leg < y_control(3) & rv_leg < x_control(4) & zv_leg > y_control(5));
 rv_il=rv_leg(loc2);
 zv_il=zv_leg(loc2);
 
@@ -84,16 +84,17 @@ bz1 = zeros(1, get(sensor_bz, 'n'));
 
 boundary_flux = zeros(1,get(sensor_bulkboundary, 'n'));
 out_leg_flux = zeros(1,get(outer_lower_leg, 'n'));
-out_strike_flux = zeros(1,get(sensor_out_strike, 'n'));
+divertor_flux = zeros(1,get(sensor_divertor, 'n'));
 in_leg_flux = zeros(1,get(inner_lower_leg, 'n'));
 in_strike_flux = zeros(1,get(sensor_in_strike, 'n'));
+nose_flux = zeros(1, get(sensor_nose, 'n'));
 
 
 % Arrange outputs and weights
-outputs={sensor_bulkboundary, outer_lower_leg, sensor_out_strike, ...
-    inner_lower_leg, sensor_in_strike, sensor_br, sensor_bz};
-obs={boundary_flux, out_leg_flux, out_strike_flux, in_leg_flux, in_strike_flux, 0, 0};
-weights={100, 100, 50, 50, 40, 10, 10};
+outputs={sensor_bulkboundary, outer_lower_leg, inner_lower_leg, sensor_divertor, sensor_nose, ...
+    sensor_in_strike, sensor_br, sensor_bz};
+obs={boundary_flux, out_leg_flux, in_leg_flux, divertor_flux, nose_flux, in_strike_flux, br1, bz1};
+weights={200, 500, 140, 220, 120, 48, 60, 10};
 
 % Get free coils
 free_coils={,'p4','p5','px','d1','d2','d3','d5','dp','d6','d7','pc'};
@@ -119,20 +120,19 @@ equil_new=fiesta_equilibrium('test', config, irod, jprofile, control_efit, ...
     efit_config, icoil, obs, weights);
 
 
-dos_a =     [0.5,   1,      2]  *0.4e6;
-tres_a =    [0.25,  1.5,    3]  *0.33e6;
-cuatro_a =  [1,     1,      1]  *0.65e6;
-cinco_a =   [4,     2,      1]  *0.75e6;
-seis_a =    [4,     2,      3]   *1.0e6;
-siete_a =   [0.1,   0.1,    0.2]   *1.75e6;
+dos_a =     [0.4,               -3,                 10,                 -9]                 *1e7;
+tres_a =    [0.5,               -2.9,               9,                  -8]                 *1e7;
+cuatro_a =  [0.6,               -2.8,               8,                  -7]                 *1e7;
+cinco_a =   [0.7,               -2.7,               7,                  -6]                 *1e7;
+seis_a =    [0.8,               -2.6,               6,                  -5]                 *1e7;
+siete_a =   [0.9,               -2.5,               5,                  -4]                 *1e7;
 
-dos_b =     [0.25,  0.5,    1];
-tres_b =    [0.25,  0.5,    1.];
-cuatro_b=   [0.5,   0.5,    0.5];
-cinco_b =   [2,     1,      0.5];
-seis_b =    [2,     1,      1];
-siete_b =   [0.1,   0.1,    0.1];
-
+dos_b =     [-2.7,          40,             -131,           155];
+tres_b =    [-2.3,          35,             -120,           140];
+cuatro_b=   [-1.9,          30,             -110,           135];
+cinco_b =   [-1.5,          25,             -100,           130];
+seis_b =    [-1.1,          20,             -90,            125];
+siete_b =   [-0.6,          15,             -80,            120];
 jprofile2=fiesta_jprofile_lao('testj2', dos_a, dos_b, 1, Ip);  % Create the profile according to coefficients
 equil_j2=fiesta_equilibrium(...
 	'Conventional fx const.', config, irod, jprofile2, control_efit, ...
