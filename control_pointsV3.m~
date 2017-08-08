@@ -44,26 +44,26 @@ mid_ox=fiesta_point('out_midplane_x', x_mid(2)+0.01, 0);
 %[len_3d_iu, length_2d, conn_o_l, phi, path_3d, path_2d, seg1, seg2]=connection_length3(equil, psi_points(1), plate);
 %[len_3d_il, length_2d, conn_o_u, phi, path_3d, path_2d, seg1, seg2]=connection_length3(equil, psi_points_out(5), plate_up);
 [len_3d_ou, length_2d, conn_o_u, phi, path_3d, path_2d]=connection_length2(equil, mid_o, plate_up);
-[len_3d_iu, length_2d, conn_i_u, phi, path_3d, path_2d]=connection_length2(equil, mid_i, plate_up);
-[len_3d_il, length_2d, conn_i_l, phi, path_3d, path_2d]=connection_length2(equil, mid_i, plate);  % These to be commented ^ when using other method
+%[len_3d_iu, length_2d, conn_i_u, phi, path_3d, path_2d]=connection_length2(equil, mid_i, plate_up);
+%[len_3d_il, length_2d, conn_i_l, phi, path_3d, path_2d]=connection_length2(equil, mid_i, plate);  % These to be commented ^ when using other method
 [len_3d_ol, length_2d, conn_o_l, phi, path_3d, path_2d]=connection_length2(equil, mid_o, plate);
 [len_3d_olx, length_2d, conn_o_lx, phi, path_3d, path_2d]=connection_length2(equil, mid_ox, plate);
 
-r_il=get(conn_i_l, 'r');
-z_il=get(conn_i_l, 'z');
+%r_il=get(conn_i_l, 'r');
+%z_il=get(conn_i_l, 'z');
 r_ol=get(conn_o_l, 'r');
 z_ol=get(conn_o_l, 'z');
 r_olx=get(conn_o_lx, 'r');
 z_olx=get(conn_o_lx, 'z');
 % Get strike points via connection length
-r_iu=get(conn_i_u, 'r');
-z_iu=get(conn_i_u, 'z');
+%r_iu=get(conn_i_u, 'r');
+%z_iu=get(conn_i_u, 'z');
 r_ou=get(conn_o_u, 'r');
 z_ou=get(conn_o_u, 'z');
-x_btm=[r_il(numel(r_il)), r_ol(numel(r_ol))]';
-y_btm=[z_il(numel(z_il)), z_ol(numel(z_ol))]';
-x_top=[r_iu(1), r_ou(1)]';
-y_top=[z_iu(1), z_ou(1)]';
+%x_btm=[r_il(numel(r_il)), r_ol(numel(r_ol))]';
+%y_btm=[z_il(numel(z_il)), z_ol(numel(z_ol))]';
+%x_top=[r_iu(1), r_ou(1)]';
+%y_top=[z_iu(1), z_ou(1)]';
 x_exp=(r_olx(numel(r_olx))-r_ol(numel(r_ol)));
 y_exp=(z_olx(numel(z_olx))-z_ol(numel(z_ol)));
 d=(x_exp^2 + y_exp^2)^0.5;
@@ -72,15 +72,15 @@ fx=d/0.01;
 conn_len=[len_3d_ol, len_3d_olx, fx];
 
 % Get the strike points via intersections
-%[x_btm, y_btm]=intersect(psi_equil, psib, plate);
-%[x_top, y_top]=intersect(psi_equil, psib, plate_up);
-%limit=0.0004;
-%low_div_psi=interp2(psin, x_btm, y_btm);
-%upp_div_psi=interp2(psin, x_top, y_top);
-%x_btm=x_btm(abs(low_div_psi-0.9999) < limit);
-%y_btm=y_btm(abs(low_div_psi-0.9999) < limit);
-%x_top=x_top(abs(upp_div_psi-0.9999) < limit);
-%y_top=y_top(abs(upp_div_psi-0.9999) < limit);
+[x_btm, y_btm]=intersect(psi_equil, psib, plate);
+[x_top, y_top]=intersect(psi_equil, psib, plate_up);
+limit=0.0005;
+low_div_psi=interp2(psin, x_btm, y_btm);
+upp_div_psi=interp2(psin, x_top, y_top);
+x_btm=x_btm(abs(low_div_psi-0.9999) < limit);
+y_btm=y_btm(abs(low_div_psi-0.9999) < limit);
+x_top=x_top(abs(upp_div_psi-0.9999) < limit);
+y_top=y_top(abs(upp_div_psi-0.9999) < limit);
 
 %decimate the boundary to give some other control points
 %select=linspace(1, numel(r_lcfs), 10);

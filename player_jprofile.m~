@@ -12,7 +12,7 @@ cinco_a =   [0.7,               -2.7,               7,                  -6]     
 seis_a =    [0.8,               -2.6,               6,                  -5]                 *1e7;
 siete_a =   [0.9,               -2.5,               5,                  -4]                 *1e7;
 
-dos_b =     [-2.65,         37,             -131,           155];
+dos_b =     [-2.65,         40,             -131,           155];
 tres_b =    [-2.4,          35,             -120,           140];
 cuatro_b=   [-2.1,          30,             -110,           135];
 cinco_b =   [-1.9,          25,             -100,           130];
@@ -32,7 +32,7 @@ hold on
 plot([uno(2), dos(2), tres(2), cuatro(2), cinco(2), seis(2), siete(2)], 'r')
 plot([uno(3), dos(3), tres(3), cuatro(3), cinco(3), seis(3), siete(3)], 'g')
 plot([uno(4), dos(4), tres(4), cuatro(4), cinco(4), seis(4), siete(4)], 'm')
-legend('uno', 'dos', 'tres', 'cuatro')
+legend('1st order', '2nd order', '3rd order', '4th order')
 
 jprofile2=fiesta_jprofile_lao('testj2', dos_a, dos_b, 1, Ip);  % Create the profile according to coefficients
 equil_j2=fiesta_equilibrium(...
