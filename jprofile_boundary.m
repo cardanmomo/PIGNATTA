@@ -60,8 +60,8 @@ sensor_in_strike=fiesta_sensor_isoflux('st_in', [x_control(3), x_control(5)]', .
 %sensor_divertor=fiesta_sensor_isoflux('divertor', [1.3172, x_control(6)]', ...  % For Super-X
 %										[-1.9572, y_control(6)]');
 sensor_divertor=fiesta_sensor_isoflux('divertor', [x_control(3), x_control(6)]', ...  % For Conventional
-										[y_control(3), y_control(6)]');                             
-sensor_nose=fiesta_sensor_isoflux('nose', [x_control(3), 0.70859]', [y_control(3),-1.6078]');
+										[y_control(3), y_control(6)]');
+sensor_nose=fiesta_sensor_isoflux('nose', [0.8867, x_control(5)]', [-1.0172, y_control(5)]');
 
 %get the locations along the inner and outer divertor legs
 psin=get(equil, 'Psi_n');
@@ -96,12 +96,12 @@ nose_flux = zeros(1, get(sensor_nose, 'n'));
 outputs={sensor_bulkboundary, outer_lower_leg, inner_lower_leg, sensor_divertor, sensor_nose, ...
     sensor_in_strike, sensor_br, sensor_bz};
 obs={boundary_flux, out_leg_flux, in_leg_flux, divertor_flux, nose_flux, in_strike_flux, br1, bz1};
-weights={200, 500, 140, 220, 20, 48, 60, 10};
+weights={200, 300, 240, 180, 200, 48, 60, 10};
 
 % Get free coils
-free_coils={,'p4','p5','px','d1','d2','d3','d5','dp','d6','pc'};
+free_coils={,'p4','p5','px','d1','d2','d3','dp','pc'};
 icoil=get(equil, 'icoil');
-%icoil.p1 = -20e3;
+icoil.p1 = -20e3;
 
 circuit_labels=get(config, 'circuit_labels');
 free_coils_index=zeros(1,length(free_coils));
