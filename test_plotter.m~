@@ -165,7 +165,7 @@ plot(Lo_SXD1MA_d2_free(1, :), Lo_SXD1MA_d2_free(2, :), 'r-')
 plot(Lo_SXD1MA_d3_free(1, :), Lo_SXD1MA_d3_free(2, :), 'g-')
 %plot(Lo_SXD1MA_d3(1, :), Lo_SXD1MA_d3(2, :), 'g--')
 plot(Lo_SXD1MA_dp_free(1, :), Lo_SXD1MA_dp_free(2, :), 'm-')
-plot(Lo_SXD1MA_p1_free(1, :), Lo_SXD1MA_d1_free(2, :), 'k-')
+plot(Lo_SXD1MA_dp_free(1, :), Lo_SXD1MA_dp_free(2, :), 'k-')
 %legend('d1 all-free', 'd1', 'd2 all-free', 'd2', 'd3 all-free', ...
 %    'd3', 'dp all-free', 'dp', 'p1 all-free', 'p1 -20kA')
 legend('d1', 'd2', 'd3', 'dp', 'p1')
@@ -207,4 +207,3 @@ end
 plot(con, imp, con, omp, con, isp, con, osp)
 legend('Inner midplane', 'Outer midplane', 'Inner strike point', 'Outer strike point')
 ylabel('Displacement (cm)')
-xlabel('Profile number')

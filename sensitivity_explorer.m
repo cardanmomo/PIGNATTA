@@ -46,8 +46,9 @@ coil_ind_s={'p4', 'p5', 'px', 'd1', 'd2', 'd3', 'd5', 'd6', 'd7', 'dp', 'pc'};
 %equilibria='/projects/physics/MAST-U/Matfiles/2016/conventional_400kA_high_li.mat';
 %equilibria='/projects/physics/MAST-U/Matfiles/2016/Super_X_2014_P4_CATIA.mat';
 %equilibria='/projects/physics/MAST-U/Matfiles/2016/high_li_sxd_2014coils.mat';
-equilibria='/projects/physics/MAST-U/Matfiles/2016/Conventional_2014_P4_CATIA.mat';
-load(equilibria)
+%equilibria='/projects/physics/MAST-U/Matfiles/2016/Conventional_2014_P4_CATIA.mat';
+%load(equilibria)
+equil = equil_j2
 equil_orig=equil;
 irod=get(equil, 'irod');
 control_points=['mid_in ','mid_out ','xp_low ', 'xp_up ','sp_in_low ', 'sp_out_low ','sp_in_up ','sp_out_up'];
@@ -63,7 +64,7 @@ iso = fiesta_sensor_isoflux('fbz_iso', [0.9,  0.9], [1.3, -1.3]);
 icoil_orig=get(equil, 'icoil');
 icoil_flux=icoil_orig;
 che = 0;  % initializes determinator of config and mastoutline plot
-path = 'control6_exploration/';
+path = '/home/cmoreno/work/';
 smatrix=data0.data*(2.5);  %-----------------------------------------------------
 
 for displ=0:45

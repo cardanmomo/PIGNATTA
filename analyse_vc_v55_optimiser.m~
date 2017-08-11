@@ -60,11 +60,13 @@ equil_new=set(equil_new,config,'icoil',icoil_total);
 dz=y_control_vc-y_control;
 dr=x_control_vc-x_control;
 
+
+% This next bit is just to prove that the given matrix works
 %[icoil_total, x_control_vc, y_control_vc, equil_new]=icoil_calc(tol,...
 %    icoil_total, x_control_vc, x_control, y_control_vc, y_control, iso,...
 %    dr, dz, equil_new, coilset, smatrix, config, control, control_p);
 
-% Use the functioin created to modify the smatrix values
+% Use the function created to modify the smatrix values
 [icoil_total, x_control_vc, y_control_vc, equil_new]=icoil_mod1(tol,...
     icoil_total, x_control_vc, x_control, y_control_vc, y_control, iso,...
     dr, dz, equil_new, coilset, smatrix, config, control, control_p, displ);

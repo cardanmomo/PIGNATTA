@@ -39,6 +39,7 @@ addpath('/home/athorn/FIESTA', '-end');
 %add LP routines for S matrix
 addpath('/home/lpang/work/zameDEV', '-end');
 addpath('/home/cmoreno/work/2016/', '-end');  % Equilibria folder
+addpath('/home/cmoreno/work/smatrices/', '-end');  % Sensitivity matrices location 
 set(0, 'DefaultFigureWindowStyle', 'docked')
 beep on
 
