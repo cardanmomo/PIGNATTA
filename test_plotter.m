@@ -2,7 +2,7 @@
 % to be used with the modified version of test_jprofile and 
 % test_jprofile_boundary
 % ------------------------------Plot all equilibria boundaries using colors
-figure();  
+figure('Units','normalized','PaperPositionMode','auto');
 plot(equil_new, 'psi_boundary', 'k')
 plot(equil_j2, 'psi_boundary', 'r')
 plot(equil_j3, 'psi_boundary', 'b')
@@ -13,7 +13,7 @@ plot(equil_j7, 'psi_boundary', 'y')
 legend('new', 'j2', 'j3', 'j4', 'j5', 'j6', 'j7', 'location', 'se')
 
 % --------------------------------Plot the current profiles at the midplane
-figure();  
+figure('Units','normalized','PaperPositionMode','auto'); 
 j = get(equil_new, 'j');
 j2 = get(equil_j2, 'j');
 j3 = get(equil_j3, 'j');
@@ -40,7 +40,7 @@ xlabel('r (m)')
 ylabel('J (A)')
 
 % ----------------------------------Plot the current profiles from psi_zero
-figure();  
+figure('Units','normalized','PaperPositionMode','auto');  
 plot(psi_j, j_prof, 'k')
 hold on
 plot(psi_j, j_prof2, 'r')
@@ -54,7 +54,7 @@ xlabel('$\psi_{n}$', 'interpreter', 'latex', 'fontsize', 19)
 ylabel('J (A)')
 
 % --------------------Plot changes in internal inductance and poloidal beta
-figure();  
+figure('Units','normalized','PaperPositionMode','auto'); 
 plot([li(equil_new), li(equil_j2), li(equil_j3), li(equil_j4), li(equil_j5), li(equil_j6), li(equil_j7)])
 hold on
 plot([betap(equil_new), betap(equil_j2), betap(equil_j3), betap(equil_j4), betap(equil_j5), betap(equil_j6), betap(equil_j7)], 'r')
@@ -63,7 +63,7 @@ xlabel('Profile number')
 ylabel('Magnitude')
 
 % -----------------------------------Plot evolution of coefficients (ALPHA)
-figure();  
+figure('Units','normalized','PaperPositionMode','auto');  
 plot([uno_a(1), dos_a(1), tres_a(1), cuatro_a(1), cinco_a(1), ...
     seis_a(1), siete_a(1)], 'ro')
 hold on
@@ -87,7 +87,7 @@ xlabel('Profile number')
 ylabel('Magnitude')
 
 % ------------------------------------Plot evolution of coefficients (BETA)
-figure();  
+figure('Units','normalized','PaperPositionMode','auto');
 plot([uno_b(1), dos_b(1), tres_b(1), cuatro_b(1), cinco_b(1), ...
     seis_b(1), siete_b(1)], 'ro')
 hold on
@@ -111,7 +111,7 @@ xlabel('Profile number')
 ylabel('Magnitude')
 
 % --------------------------------Coil currents as Li changes (02/08 modif)
-figure();  
+figure('Units','normalized','PaperPositionMode','auto');
 icoil_new = get(equil_new, 'icoil');
 Li = [li(equil_new), li(equil_j2), li(equil_j3), li(equil_j4), ...
     li(equil_j5), li(equil_j6), li(equil_j7)];
@@ -146,7 +146,7 @@ plot(Li,p4,'o', Li,p5,'o', Li,d1,'o', Li,d2,'o', Li,d3,'o', ...
     Li,d5,'o', Li,d6,'o', Li,d7,'o', Li,dp,'o', Li,pc,'o')
 
   
-figure();
+figure('Units','normalized','PaperPositionMode','auto');
 Lo_SXD1MA_d1_free = sortrows([Li;d1]', 1)';
 Lo_SXD1MA_d2_free = sortrows([Li;d2]', 1)';
 Lo_SXD1MA_d3_free = sortrows([Li;d3]', 1)';
@@ -189,7 +189,7 @@ xlabel('Li')
 
 
 
-figure();  % Plot control points displacements
+figure('Units','normalized','PaperPositionMode','auto');  % Plot control points displacements
 con = linspace(2, 7, 6);
 [x_new, y_new, conn_new] = control_pointsV3(equil_new);
 for i=2:7

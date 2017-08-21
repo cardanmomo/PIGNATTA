@@ -1,6 +1,6 @@
 % Plotter to work with the files produced by variations_explorer
-path='Var_data_single_coil/SXD_high_li/';
-path2='Var_data_single_coil/SXD_low_li/';
+path='/home/cmoreno/work/Var_data_single_coil/SXD_high_li/';
+path2='/home/cmoreno/work/Var_data_single_coil/SXD_low_li/';
 vfile1 = [path, '6sxd_hli.txt'];
 vfile2 = [path2, '6sxd.txt'];
 figure();

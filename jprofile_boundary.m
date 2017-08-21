@@ -3,9 +3,9 @@
 %close all
 %clear all
 
-load Conventional_2014_P4_CATIA;       % 1MA, Li: 0.69
-uno_a = [2079756.1196, -18161131.974, 52025469.4664, -48047548.3834];
-uno_b = [-1.4029, 20.1454, -65.9427, 77.788];
+%load Conventional_2014_P4_CATIA;       % 1MA, Li: 0.69
+%uno_a = [2079756.1196, -18161131.974, 52025469.4664, -48047548.3834];
+%uno_b = [-1.4029, 20.1454, -65.9427, 77.788];
 
 %load conventional_400kA                % 400kA, Li: 0.7
 %uno_a = [812001.214947, -7090668.51095, 20312354.9039, -18759251.2866];
@@ -19,9 +19,9 @@ uno_b = [-1.4029, 20.1454, -65.9427, 77.788];
 %uno_a = [829256.113274, -7241344.10353, 20743989.2564, -19157882.4311];
 %uno_b = [-0.559373, 8.0325, -26.2932, 31.0162];
 
-%load Super_X_2014_P4_CATIA.mat         % 1MA, Li: 0.68
-%uno_a = [0.20732688478800  -1.81044829291000   5.18631892098000  -4.78976762426000] *1e7;
-%uno_b = [-1.39852, 20.0825, -65.737, 77.5454];
+load Super_X_2014_P4_CATIA.mat         % 1MA, Li: 0.68
+uno_a = [0.20732688478800  -1.81044829291000   5.18631892098000  -4.78976762426000] *1e7;
+uno_b = [-1.39852, 20.0825, -65.737, 77.5454];
 
 %load high_li_sxd_2014coils              % 1MA, Li: 1.08
 %uno_a = [892469.9684, 0];
@@ -99,12 +99,12 @@ sol_flux = zeros(1, get(sensor_sol, 'n'));
 outputs={sensor_bulkboundary, outer_lower_leg, inner_lower_leg, sensor_divertor, sensor_nose, ...
     sensor_in_strike, sensor_br, sensor_bz, sensor_sol};
 obs={boundary_flux, out_leg_flux, in_leg_flux, divertor_flux, nose_flux, in_strike_flux, br1, bz1, sol_flux};
-weights={200, 300, 240, 180, 200, 48, 60, 10, 100};
+weights={200, 400, 240, 180, 200, 48, 60, 10, 100};
 
 % Get free coils
 free_coils={,'p4','p5','px','d1','d2','d3','dp','pc'};
 icoil=get(equil, 'icoil');
-icoil.p1 = -20e3;
+%icoil.p1 = -20e3;
 
 circuit_labels=get(config, 'circuit_labels');
 free_coils_index=zeros(1,length(free_coils));

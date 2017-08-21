@@ -4,40 +4,41 @@
 %clear all
 
 %first read back in the sensitivity matrix for a given config
-%sfile='smat1.txt';
-%sfile5='smat5.txt';
-%sfile10='smat10.txt';
-%sfile15='smat15.txt';
-%sfile17='smat17.txt';
-%sfile20='smat20.txt';
-%sfile22='smat22.txt';
-%sfile25='smat25.txt';
-%sfile30='smat30.txt';
-%sfile35='smat35.txt';
-%sfile40='smat40.txt';
-%sfile45='smat45.txt';
-%sfile50='smat50.txt';
-%sfile55='smat55.txt';
+path = '/home/cmoreno/work/smats_SXD_1MA/';
+sfile=[path, 'smat1.txt'];
+sfile5=[path, 'smat5.txt'];
+sfile10=[path, 'smat10.txt'];
+sfile15=[path, 'smat15.txt'];
+sfile18=[path, 'smat18.txt'];
+%sfile20=[path, 'smat20.txt'];
+%sfile22=[path, 'smat22.txt'];
+sfile25=[path, 'smat25.txt'];
+sfile30=[path, 'smat30.txt'];
+sfile35=[path, 'smat35.txt'];
+sfile40=[path, 'smat40.txt'];
+sfile45=[path, 'smat45.txt'];
+sfile50=[path, 'smat50.txt'];
+sfile55=[path, 'smat55.txt'];
 
-%data=importdata(sfile, ' ', 1);
-%data5=importdata(sfile5, ' ', 1);
-%data10=importdata(sfile10, ' ', 1);
-%data15=importdata(sfile15, ' ', 1);
-%data17=importdata(sfile17, ' ', 1);
+data=importdata(sfile, ' ', 1);
+data5=importdata(sfile5, ' ', 1);
+data10=importdata(sfile10, ' ', 1);
+data15=importdata(sfile15, ' ', 1);
+data18=importdata(sfile18, ' ', 1);
 %data20=importdata(sfile20, ' ', 1);
 %data22=importdata(sfile22, ' ', 1);
-%data25=importdata(sfile25, ' ', 1);
-%data30=importdata(sfile30, ' ', 1);
-%data35=importdata(sfile35, ' ', 1);
-%data40=importdata(sfile40, ' ', 1);
-%data45=importdata(sfile45, ' ', 1);
-%data50=importdata(sfile50, ' ', 1);
-%data55=importdata(sfile55, ' ', 1);
+data25=importdata(sfile25, ' ', 1);
+data30=importdata(sfile30, ' ', 1);
+data35=importdata(sfile35, ' ', 1);
+data40=importdata(sfile40, ' ', 1);
+data45=importdata(sfile45, ' ', 1);
+data50=importdata(sfile50, ' ', 1);
+data55=importdata(sfile55, ' ', 1);
 
-sfile0='smatrices/smatrix_400kA_conv_low_li.txt';  % Original smatrix SD
-data0=importdata(sfile0, ' ', 1);
+%sfile0='smatrices/smatrix_400kA_conv_low_li.txt';  % Original smatrix SD
+%data0=importdata(sfile0, ' ', 1);
 
-control_params=char(data0.textdata(2:end));
+control_params=char(data18.textdata(2:end));
 ncontrol=size(control_params, 1);
 coil_ind_s={'p4', 'p5', 'px', 'd1', 'd2', 'd3', 'd5', 'd6', 'd7', 'dp', 'pc'};
 
@@ -65,9 +66,9 @@ icoil_orig=get(equil, 'icoil');
 icoil_flux=icoil_orig;
 che = 0;  % initializes determinator of config and mastoutline plot
 path = '/home/cmoreno/work/';
-smatrix=data0.data*(2.5);  %-----------------------------------------------------
+smatrix=data50.data;%*(2.5);  %-----------------------------------------------------
 
-for displ=0:45
+for displ=0:55
     displ = -displ
     for control_p=6
         %calculate the change in the location of the control points
@@ -85,7 +86,7 @@ for displ=0:45
         params=parameters(equil_new);
         betap=params.betap;
 
-        vals=fopen([path, 'dummy0.txt'], 'a');  %--------------------------
+        vals=fopen([path, 'dummy50.txt'], 'a');  %--------------------------
         fprintf(vals, '%f', displ);
         fprintf(vals, ' %f', conn_len_vc(1));
         fprintf(vals, ' %f', conn_len_vc(3));

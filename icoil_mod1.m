@@ -18,9 +18,9 @@ if control_p==1 || control_p==2 || control_p==3 || control_p==6
             d_r  % Print the final displacement achieved
             break
         end
-        if d_r<(displ/100)  % ADJUSTABLE ACCORDING TO THE DIRECTION OF MOVT.
+        if d_r>(displ/100)  % ADJUSTABLE ACCORDING TO THE DIRECTION OF MOVT.
             [icoil_total]=v_circ(equil_new, coilset, smatrix, (-abs(d_r)/(displ)), control_p);
-        elseif d_r>(displ/100)
+        elseif d_r<(displ/100)
             [icoil_total]=v_circ(equil_new, coilset, smatrix, (abs(d_r)/(displ)), control_p);
         end
         % Calculate new eq:
@@ -86,9 +86,9 @@ while (any(abs(dz)>tol) && (any(abs(dr)>tol) || dz_flag(control_p)==1))
         while abs(x_control_vc(2)-x_control(2))>tol
             dr_out=x_control_vc(2)-x_control(2)
             if dr_out<0
-                [icoil_total]=v_circ(equil_new, coilset, smatrix, abs(dr_out)*100, 2);
+                [icoil_total]=v_circ(equil_new, coilset, smatrix, abs(dr_out)*10, 2);
             elseif dr_out>0
-                [icoil_total]=v_circ(equil_new, coilset, smatrix, -abs(dr_out)*100, 2);
+                [icoil_total]=v_circ(equil_new, coilset, smatrix, -abs(dr_out)*10, 2);
             end
             feedback=fiesta_feedback2(get(config,'grid'), coilset,'p6', iso);
             equil_new=set(equil_new,config,'feedback',feedback,'control',control);
@@ -103,9 +103,9 @@ while (any(abs(dz)>tol) && (any(abs(dr)>tol) || dz_flag(control_p)==1))
         while abs(x_control_vc(3)-x_control(3))>tol
             dr_xp=x_control_vc(3)-x_control(3)
             if dr_xp<0
-                [icoil_total]=v_circ(equil_new, coilset, smatrix, abs(dr_xp)*100, 3);
+                [icoil_total]=v_circ(equil_new, coilset, smatrix, abs(dr_xp), 3);
             elseif dr_xp>0
-                [icoil_total]=v_circ(equil_new, coilset, smatrix, -abs(dr_xp)*100, 3);
+                [icoil_total]=v_circ(equil_new, coilset, smatrix, -abs(dr_xp), 3);
             end
             feedback=fiesta_feedback2(get(config,'grid'), coilset,'p6', iso);
             equil_new=set(equil_new,config,'feedback',feedback,'control',control);

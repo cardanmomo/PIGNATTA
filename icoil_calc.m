@@ -3,19 +3,22 @@ function [icoil_total, x_control_vc, y_control_vc, ...
     x_control, y_control_vc, y_control, iso, dr, dz, equil_new, ...
     coilset, smatrix, config, control, control_p)
 
-dz=y_control_vc-y_control;  % Gets displacement of control parametrers
-dr=x_control_vc-x_control;
-dr_flag=abs(dr(1:6))>tol;  % Raise a flag if a control parameter goes above tolerance
-dz_flag=abs(dz(1:6))>tol;
 count=0;  % Count # of iterations
-while (any(abs(dz)>tol) && (any(abs(dr)>tol) || dr_flag(control_p)==1))
+dz=y_control_vc-y_control;
+dr=x_control_vc-x_control;
+% Exclude the last two control points (same as prev 2) and
+% raise a flag if a control parameter goes above tolerance
+dr_flag=abs(dr(1:6))>tol;
+dz_flag=abs(dz(1:6))>tol;
+
+while (any(abs(dz)>tol) && (any(abs(dr)>tol) || dz_flag(control_p)==1))
     if (dr_flag(1)==1 && control_p~=1)
         while abs(x_control_vc(1)-x_control(1))>tol
             dr_in=x_control_vc(1)-x_control(1)
             if dr_in>0
-                [icoil_total]=v_circ(equil_new, coilset, smatrix, abs(dr_in)*10, 1);
-            elseif dr_in<0
                 [icoil_total]=v_circ(equil_new, coilset, smatrix, -abs(dr_in)*10, 1);
+            elseif dr_in<0
+                [icoil_total]=v_circ(equil_new, coilset, smatrix, abs(dr_in)*10, 1);
             end
             feedback=fiesta_feedback2(get(config,'grid'), coilset,'p6', iso);
             equil_new=set(equil_new,config,'feedback',feedback,'control',control);
@@ -64,9 +67,9 @@ while (any(abs(dz)>tol) && (any(abs(dr)>tol) || dr_flag(control_p)==1))
         while abs(y_control_vc(3)-y_control(3))>tol
             dz_xp=y_control_vc(3)-y_control(3)
             if dz_xp>0
-                [icoil_total]=v_circ(equil_new, coilset, smatrix, -abs(dz_xp)*100, 4);
+                [icoil_total]=v_circ(equil_new, coilset, smatrix, -abs(dz_xp), 4);
             elseif dz_xp<0
-                [icoil_total]=v_circ(equil_new, coilset, smatrix, abs(dz_xp)*100, 4);
+                [icoil_total]=v_circ(equil_new, coilset, smatrix, abs(dz_xp), 4);
             end
             feedback=fiesta_feedback2(get(config,'grid'), coilset,'p6', iso);
             equil_new=set(equil_new,config,'feedback',feedback,'control',control);
@@ -94,13 +97,13 @@ while (any(abs(dz)>tol) && (any(abs(dr)>tol) || dr_flag(control_p)==1))
             dr_flag=abs(dr(1:6))>tol;
             dz_flag=abs(dz(1:6))>tol;
         end
-    elseif (dz_flag(6)==1 && control_p~=6)
-        while abs(y_control_vc(6)-y_control(6))>tol
-            dz_osp=y_control_vc(6)-y_control(6)
-            if dz_osp<0
-                [icoil_total]=v_circ(equil_new, coilset, smatrix, -abs(dz_osp)*100, 6);
-            elseif dz_osp>0
-                [icoil_total]=v_circ(equil_new, coilset, smatrix, abs(dz_osp)*100, 6);
+    elseif (dr_flag(6)==1 && control_p~=6)
+        while abs(x_control_vc(6)-x_control(6))>tol
+            dr_osp=x_control_vc(6)-x_control(6)
+            if dr_osp>0
+                [icoil_total]=v_circ(equil_new, coilset, smatrix, -abs(dr_osp), 6);
+            elseif dr_osp<0
+                [icoil_total]=v_circ(equil_new, coilset, smatrix, abs(dr_osp), 6);
             end
             feedback=fiesta_feedback2(get(config,'grid'), coilset,'p6', iso);
             equil_new=set(equil_new,config,'feedback',feedback,'control',control);

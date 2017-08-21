@@ -4,7 +4,9 @@
 clear all
 %close all
 %first read back in the sensitivity matrix for a given config
-sfile='smatrix_1MA_SXD_low_li.txt';
+displ = 80;
+
+eval(sprintf('sfile=''/home/cmoreno/work/smats_SD_400kA/smat%d.txt'';', displ))
 data=importdata(sfile, ' ', 1);
 
 smatrix=data.data;
@@ -13,14 +15,8 @@ ncontrol=size(control_params, 1);
 coil_ind_s={'p4', 'p5', 'px', 'd1', 'd2', 'd3', ...
     'd5', 'd6', 'd7', 'dp', 'pc'};
 %read in the equilbria
-%equilibria='/projects/physics/MAST-U/Matfiles/2016/conventional_400kA.mat';
-%equilibria='/projects/physics/MAST-U/Matfiles/2016/conventional_400kA_high_li.mat';
-%equilibria='/projects/physics/MAST-U/Matfiles/2016/Conventional_2014_P4_CATIA.mat';
-%equilibria='/projects/physics/MAST-U/Matfiles/2016/Super_X_2014_P4_CATIA.mat';
-%equilibria='/projects/physics/MAST-U/Matfiles/2016/high_li_sxd_2014coils.mat';
-equilibria='Super_X_2014_P4_CATIA.mat';
 
-load(equilibria);
+load Conventional_2014_P4_CATIA_400kA;
 equil_orig=equil;
 coilset = get(config,'coilset');
 control = get(equil,'control');
@@ -47,7 +43,7 @@ iso = fiesta_sensor_isoflux('fbz_iso', [0.9,  0.9], [1.3, -1.3]);
 % v_circ: *equil*, *coilset*, *dI*, *control parameter*
 control_p=6;  % Control parameter
 tol=0.001;  % Tolerance 
-displ=-1;  % Displacement in cm
+%displ=25;  % Displacement in cm
 [icoil_total]=v_circ(equil, coilset, smatrix, displ, control_p);
 
 % Introduce feedback & calculate new equilibrium
@@ -60,11 +56,12 @@ equil_new=set(equil_new,config,'icoil',icoil_total);
 dz=y_control_vc-y_control;
 dr=x_control_vc-x_control;
 
+% This next bit is just to prove that the given matrix works
 %[icoil_total, x_control_vc, y_control_vc, equil_new]=icoil_calc(tol,...
-%    icoil_total, x_control_vc, x_control, y_control_vc, y_control, iso,...
+%    icoil_total, x_control_vc, x_con   trol, y_control_vc, y_control, iso,...
 %    dr, dz, equil_new, coilset, smatrix, config, control, control_p);
 
-% Use the functioin created to modify the smatrix values
+% Use the function created to modify the smatrix values
 [icoil_total, x_control_vc, y_control_vc, equil_new]=icoil_mod1(tol,...
     icoil_total, x_control_vc, x_control, y_control_vc, y_control, iso,...
     dr, dz, equil_new, coilset, smatrix, config, control, control_p, displ);
@@ -75,27 +72,7 @@ delta_x=x_control-x_control_vc;
 delta_y=abs(y_control)-abs(y_control_vc); %kludge
 delta_vc(1,:)=sqrt(delta_x.^2+delta_y.^2);
 smat=icoil_total-get(equil, 'icoil')
-% Write the result in delta_vc to a file
-fid=fopen('analyse_vc_out.txt', 'w');
 
-fprintf(fid, '%s\n', equilibria);
-fprintf(fid, '%s\n', sfile);
-fprintf(fid, '%s', 'delta_pos(m) ');
-fprintf(fid, '%s', control_points);
-fprintf(fid, '%s\n', ' ');
-
-for i=1:ncontrol
-	fprintf(fid, '%s', control_params(i,:));
-	for j=1:numel(x_control)
-		if j < numel(x_control)
-			fprintf(fid, ' %f', delta_vc(i,j));
-		end
-		if j == numel(x_control)
-			fprintf(fid, ' %f\n', delta_vc(i,j));
-		end
-	end
-end
-fclose(fid);
 
 %plot the result and check the location of the control points is correct
 hold on
@@ -109,10 +86,3 @@ plot(x_control_vc, y_control_vc, 'xr')
 %conn_len_vc
 d_r=x_control_vc(control_p)-x_control(control_p)
 %d_z=abs(y_control_vc(control_p)-y_control(control_p))
-
-%reculate the equilbrium with the extra VC circuit current added
-%icoil_total=icoil_orig;
-%for ii=1:11
-%	icoil_total.(char(coil_ind_s{ii}))=icoil_orig.(char(coil_ind_s{ii}))+... 
-%											smatrix(i,ii)*dI;
-%end
