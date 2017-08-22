@@ -4,13 +4,12 @@
 %clear all
 
 %first read back in the sensitivity matrix for a given config
-path = '/home/cmoreno/work/control6_exploration/SXDtoSD_1MA/';
+path = '/home/cmoreno/work/smats_SXD_1MA/';
 sfile=[path, 'smat1.txt'];
 sfile5=[path, 'smat5.txt'];
 sfile10=[path, 'smat10.txt'];
 sfile15=[path, 'smat15.txt'];
-sfile17=[path, 'smat17.txt'];
-sfile22=[path, 'smat22.txt'];
+sfile18=[path, 'smat18.txt'];
 sfile25=[path, 'smat25.txt'];
 sfile30=[path, 'smat30.txt'];
 sfile35=[path, 'smat35.txt'];
@@ -23,13 +22,12 @@ sfile50=[path, 'smat50.txt'];
 %sfile70=[path, 'smat70.txt'];
 %sfile75=[path, 'smat75.txt'];
 %sfile80=[path, 'smat80.txt'];
-array = [1, 5, 10, 15, 17, 22, 25, 30, 35, 40, 45, 50];
+array = [1, 5, 10, 15, 18, 25, 30, 35, 40, 45, 50];
 data1=importdata(sfile, ' ', 1);
 data5=importdata(sfile5, ' ', 1);
 data10=importdata(sfile10, ' ', 1);
 data15=importdata(sfile15, ' ', 1);
-data17=importdata(sfile17, ' ', 1);
-data22=importdata(sfile22, ' ', 1);
+data18=importdata(sfile18, ' ', 1);
 data25=importdata(sfile25, ' ', 1);
 data30=importdata(sfile30, ' ', 1);
 data35=importdata(sfile35, ' ', 1);
@@ -46,10 +44,6 @@ data50=importdata(sfile50, ' ', 1);
 %sfile0='smatrices/smatrix_400kA_conv_low_li.txt';  % Original smatrix SD
 %data0=importdata(sfile0, ' ', 1);
 
-control_params=char(data.textdata(2:end));
-ncontrol=size(control_params, 1);
-coil_ind_s={'p4', 'p5', 'px', 'd1', 'd2', 'd3', 'd5', 'd6', 'd7', 'dp', 'pc'};
-
 %read in the equilbria
 %equilibria='/projects/physics/MAST-U/Matfiles/2016/conventional_400kA.mat';
 %equilibria='/projects/physics/MAST-U/Matfiles/2016/conventional_400kA_high_li.mat';
@@ -57,9 +51,7 @@ coil_ind_s={'p4', 'p5', 'px', 'd1', 'd2', 'd3', 'd5', 'd6', 'd7', 'dp', 'pc'};
 %equilibria='/projects/physics/MAST-U/Matfiles/2016/high_li_sxd_2014coils.mat';
 %equilibria='/projects/physics/MAST-U/Matfiles/2016/Conventional_2014_P4_CATIA.mat';
 %load Conventional_2014_P4_CATIA_400kA;
-equil_orig=equil_new;
-irod=get(equil, 'irod');
-control_points=['mid_in ','mid_out ','xp_low ', 'xp_up ','sp_in_low ', 'sp_out_low ','sp_in_up ','sp_out_up'];
+equil_orig=equil_j2;
 
 coilset = get(config,'coilset');
 control = get(equil,'control');
@@ -72,12 +64,12 @@ iso = fiesta_sensor_isoflux('fbz_iso', [0.9,  0.9], [1.3, -1.3]);
 icoil_orig=get(equil, 'icoil');
 icoil_flux=icoil_orig;
 che = 0;  % initializes determinator of config and mastoutline plot
-path = '/home/cmoreno/work/equil_displacements/SXDtoCD/new/';
+path = '/home/cmoreno/work/equil_displacements/SXDtoCD/j2/';
 for i=array
     eval(sprintf('smatrix=data%d.data;', i))  %-----------------------------------------------------
 
     for displ=0:50
-        displ
+        displ=-displ
         for control_p=6
             %calculate the change in the location of the control points
             [icoil_total]=v_circ_explorer(equil, coilset, smatrix, displ, control_p);

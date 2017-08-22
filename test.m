@@ -12,7 +12,7 @@ control = set(control,'diagnose',0);  % Supresses animation
 control = set(control,'quiet',1);  % Supresses other messages
 feedback=get(equil, 'feedback');
 
-[x_control, y_control]=control_pointsV2(equil);
+[x_control, y_control, conn_len]=control_pointsV3(equil);
 
 % Some other control points (10 around boundary)
 
@@ -102,7 +102,7 @@ feedback_z = fiesta_feedback2(get(config,'grid'), get(config,'coilset'), 'p6', z
 %equil_mix_vacuum = fiesta_equilibrium('Mixer vacuum', config, irod, icoil_in);
 equil_final=set(equil,config,'feedback',feedback_z,'control',control);
 equil_final=set(equil,config,'icoil',icoil_total,'control', control);
-[x_control_final, y_control_final]=control_pointsV2(equil_final);
+[x_control_final, y_control_final, conn_len_final]=control_pointsV3(equil_final);
 
 % Calculate equilibrium with a different jprofile
 jprofile=get(equil, 'jprofile');
