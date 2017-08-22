@@ -57,13 +57,61 @@ sensor_bz2=fiesta_sensor_bz(xpt2);
 % Now create sensors in strike points
 sensor_in_strike=fiesta_sensor_isoflux('st_in', [x_control(3), x_control(5)]', ...  % Change to 4 for High Li
 										[y_control(3), y_control(5)]');
-%sensor_divertor=fiesta_sensor_isoflux('divertor', [1.3172, x_control(6)]', ...  % For Super-X
-%										[-1.9572, y_control(6)]');
-sensor_divertor=fiesta_sensor_isoflux('divertor', [x_control(3), x_control(6)]', ...  % For Conventional
-										[y_control(3), y_control(6)]');
-%sensor_nose=fiesta_sensor_isoflux('nose', [x_control(3), 0.70859]', [y_control(3),-1.6078]');  % For Super-X
-sensor_nose=fiesta_sensor_isoflux('nose', [0.8867, x_control(5)]', [-1.0172, y_control(5)]');  % For Conventional
-sensor_sol = fiesta_sensor_isoflux('sol', [x_control(2)+0.03, 1.004879]', [0, -1.974879]');
+sensor_divertor=fiesta_sensor_isoflux('divertor', [1.3172, x_control(6)]', ...  % For Super-X
+										[-1.9572, y_control(6)]');
+%sensor_divertor=fiesta_sensor_isoflux('divertor', [x_control(3), x_control(6)]', ...  % For Conventional
+%										[y_control(3), y_control(6)]');
+sensor_nose=fiesta_sensor_isoflux('nose', [x_control(3), 0.70859]', [y_control(3),-1.6078]');  % For Super-X
+%sensor_nose=fiesta_sensor_isoflux('nose', [0.8867, x_control(5)]', [-1.0172, y_control(5)]');  % For Conventional
+%sensor_sol = fiesta_sensor_isoflux('sol', [x_control(2)+0.03, 1.05, 0.8125]', [0, -1.6734, -1.575]');
+midsol = fiesta_point('solthing', x_control(2)+0.01, 0);
+midsol2 = fiesta_point('solthing', x_control(2)+0.02, 0);
+midsol3 = fiesta_point('solthing', x_control(2)+0.03, 0);
+[len_3d_ol, length_2d, conn, phi, path_3d, path_2d]=connection_length2(equil, midsol, plate);
+[len_3d_ol, length_2d, conn2, phi, path_3d, path_2d]=connection_length2(equil, midsol2, plate);
+[len_3d_ol, length_2d, conn3, phi, path_3d, path_2d]=connection_length2(equil, midsol3, plate);
+
+mids = fiesta_point('solthing', x_control(1)-0.001, 0);
+mids2 = fiesta_point('solthing', x_control(1)-0.002, 0);
+mids3 = fiesta_point('solthing', x_control(1)-0.003, 0);
+[len_3d_ol, length_2d, con, phi, path_3d, path_2d]=connection_length2(equil, mids, plate);
+[len_3d_ol, length_2d, con2, phi, path_3d, path_2d]=connection_length2(equil, mids2, plate);
+[len_3d_ol, length_2d, con3, phi, path_3d, path_2d]=connection_length2(equil, mids3, plate);
+
+
+r_sil=get(con, 'r');
+z_sil=get(con, 'z');
+[rsil,ncil]=sort(r_sil);
+zsil=z_sil(ncil);
+r_sil2=get(con2, 'r');
+z_sil2=get(con2, 'z');
+[rsil2,ncil2]=sort(r_sil2);
+zsil2=z_sil2(ncil2);
+r_sil3=get(con3, 'r');
+z_sil3=get(con3, 'z');
+[rsil3,ncil3]=sort(r_sil3);
+zsil3=z_sil3(ncil3);
+
+r_sol=get(conn, 'r');
+z_sol=get(conn, 'z');
+[rs,nc]=sort(r_sol);
+zs=z_sol(nc);
+r_sol2=get(conn2, 'r');
+z_sol2=get(conn2, 'z');
+[rs2,nc2]=sort(r_sol2);
+zs2=z_sol2(nc2);
+r_sol3=get(conn3, 'r');
+z_sol3=get(conn3, 'z');
+[rs3,nc3]=sort(r_sol3);
+zs3=z_sol3(nc3);
+
+sensor_sol = fiesta_sensor_isoflux('sol', [rs]', [zs]');
+sensor_sol2 = fiesta_sensor_isoflux('sol', [rs2]', [zs2]');
+sensor_sol3 = fiesta_sensor_isoflux('sol', [rs3]', [zs3]');
+
+sensor_sil = fiesta_sensor_isoflux('sol', [rsil]', [zsil]');
+sensor_sil2 = fiesta_sensor_isoflux('sol', [rsil2]', [zsil2]');
+sensor_sil3 = fiesta_sensor_isoflux('sol', [rsil3]', [zsil3]');
 
 %get the locations along the inner and outer divertor legs
 psin=get(equil, 'Psi_n');
@@ -93,16 +141,24 @@ in_leg_flux = zeros(1,get(inner_lower_leg, 'n'));
 in_strike_flux = zeros(1,get(sensor_in_strike, 'n'));
 nose_flux = zeros(1, get(sensor_nose, 'n'));
 sol_flux = zeros(1, get(sensor_sol, 'n'));
+sol_flux2 = zeros(1, get(sensor_sol2, 'n'));
+sol_flux3 = zeros(1, get(sensor_sol3, 'n'));
+
+sil_flux = zeros(1, get(sensor_sil, 'n'));
+sil_flux2 = zeros(1, get(sensor_sil2, 'n'));
+sil_flux3 = zeros(1, get(sensor_sil3, 'n'));
 
 
 % Arrange outputs and weights
-outputs={sensor_bulkboundary, outer_lower_leg, inner_lower_leg, sensor_divertor, sensor_nose, ...
-    sensor_in_strike, sensor_br, sensor_bz, sensor_sol};
-obs={boundary_flux, out_leg_flux, in_leg_flux, divertor_flux, nose_flux, in_strike_flux, br1, bz1, sol_flux};
-weights={200, 400, 240, 180, 200, 48, 60, 10, 100};
+outputs={sensor_bulkboundary, outer_lower_leg, sensor_divertor, sensor_nose, ...
+    sensor_in_strike, sensor_br, sensor_bz, sensor_sol, sensor_sol2, sensor_sol3, sensor_sil, sensor_sil2, sensor_sil3};
+obs={boundary_flux, out_leg_flux, divertor_flux, nose_flux, in_strike_flux, br1, bz1, sol_flux, sol_flux2, sol_flux3, sil_flux, sil_flux2, sil_flux3};
+%weights={200, 400, 240, 180, 200, 48, 60, 10, 100};  % For Conventional
+%weights={700, 500, 240, 320, 20, 48, 200, 100, 220, 220, 220};
+weights={250, 200, 200, 200, 200, 250, 250, 500, 500, 500, 2500, 2500, 2500};
 
 % Get free coils
-free_coils={,'p4','p5','px','d1','d2','d3','dp','pc'};
+free_coils={,'p4','p5','px','d1','d2','d3','d5','d6','dp','pc'};
 icoil=get(equil, 'icoil');
 %icoil.p1 = -20e3;
 
@@ -113,7 +169,7 @@ for j=1:length(free_coils)
 end
 free_inputs={free_coils_index};
 
-relaxation_parameter=0.2;
+relaxation_parameter=0.5;
 control_efit = fiesta_control('boundary_method', 2);
 control_efit = set(control_efit,'diagnose',0);
 control_efit = set(control_efit,'quiet',1);
