@@ -150,12 +150,12 @@ sil_flux3 = zeros(1, get(sensor_sil3, 'n'));
 
 
 % Arrange outputs and weights
-outputs={sensor_bulkboundary, outer_lower_leg, sensor_divertor, sensor_nose, ...
-    sensor_in_strike, sensor_br, sensor_bz, sensor_sol, sensor_sol2, sensor_sol3, sensor_sil, sensor_sil2, sensor_sil3};
-obs={boundary_flux, out_leg_flux, divertor_flux, nose_flux, in_strike_flux, br1, bz1, sol_flux, sol_flux2, sol_flux3, sil_flux, sil_flux2, sil_flux3};
+outputs={sensor_bulkboundary, outer_lower_leg, inner_lower_leg, sensor_divertor, sensor_nose, ...
+    sensor_in_strike, sensor_br, sensor_bz, sensor_sol, sensor_sol2, sensor_sol3};%, sensor_sil, sensor_sil2, sensor_sil3};
+obs={boundary_flux, out_leg_flux, in_leg_flux, divertor_flux, nose_flux, in_strike_flux, br1, bz1, sol_flux, sol_flux2, sol_flux3};%, sil_flux, sil_flux2, sil_flux3};
 %weights={200, 400, 240, 180, 200, 48, 60, 10, 100};  % For Conventional
-%weights={700, 500, 240, 320, 20, 48, 200, 100, 220, 220, 220};
-weights={250, 200, 200, 200, 200, 250, 250, 500, 500, 500, 2500, 2500, 2500};
+weights={700, 500, 240, 320, 20, 48, 200, 100, 220, 220, 220};
+%weights={250, 200, 200, 200, 200, 250, 250, 500, 500, 500, 2500, 2500, 2500};
 
 % Get free coils
 free_coils={,'p4','p5','px','d1','d2','d3','d5','d6','dp','pc'};
@@ -177,8 +177,8 @@ inputs={coilset};
 initial_plasma=get(config, 'initial_plasma');
 efit_config=fiesta_efit_configuration(grid, inputs, outputs, ...
     free_inputs, relaxation_parameter);
-equil_new=fiesta_equilibrium('test', config, irod, jprofile, control_efit, ...
-    efit_config, icoil, obs, weights);
+%equil_new=fiesta_equilibrium('test', config, irod, jprofile, control_efit, ...
+%    efit_config, icoil, obs, weights);
 
 
 dos_a =     [0.4,               -3,                 10,                 -9]                 *1e7;

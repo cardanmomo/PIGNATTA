@@ -51,21 +51,21 @@ data50=importdata(sfile50, ' ', 1);
 %equilibria='/projects/physics/MAST-U/Matfiles/2016/high_li_sxd_2014coils.mat';
 %equilibria='/projects/physics/MAST-U/Matfiles/2016/Conventional_2014_P4_CATIA.mat';
 %load Conventional_2014_P4_CATIA_400kA;
-equil_orig=equil_j2;
+%equil=equil_j2;
 
 coilset = get(config,'coilset');
 control = get(equil,'control');
 control = set(control,'diagnose',0);
 control = set(control,'quiet',1);
 
-[x_control, y_control, conn_len]=control_pointsV3(equil_orig);
+[x_control, y_control, conn_len]=control_pointsV3(equil);
 % Isoflux sensor
 iso = fiesta_sensor_isoflux('fbz_iso', [0.9,  0.9], [1.3, -1.3]);
 icoil_orig=get(equil, 'icoil');
 icoil_flux=icoil_orig;
 che = 0;  % initializes determinator of config and mastoutline plot
-path = '/home/cmoreno/work/equil_displacements/SXDtoCD/j2/';
-for i=array
+path = '/home/cmoreno/work/equil_displacements/SXDtoCD/original/';
+for i=1
     eval(sprintf('smatrix=data%d.data;', i))  %-----------------------------------------------------
 
     for displ=0:50
@@ -103,7 +103,7 @@ for i=array
             plot(equil_new, 'psi_boundary', 'r') 
             if che==0
                 hold on
-                plot(equil_orig, 'psi_boundary', 'b')
+                plot(equil, 'psi_boundary', 'b')
                 plotmastuoutline;
                 plot(config)        
             end 

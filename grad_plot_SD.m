@@ -12,12 +12,12 @@ vfile35 = [path, 'dummy35.txt'];
 vfile40 = [path, 'dummy40.txt'];
 vfile45 = [path, 'dummy45.txt'];
 vfile50 = [path, 'dummy50.txt'];
-vfile55 = [path, 'dummy55.txt'];
-vfile60 = [path, 'dummy60.txt'];
-vfile65 = [path, 'dummy65.txt'];
-vfile70 = [path, 'dummy70.txt'];
-vfile75 = [path, 'dummy75.txt'];
-vfile80 = [path, 'dummy80.txt'];
+%vfile55 = [path, 'dummy55.txt'];
+%vfile60 = [path, 'dummy60.txt'];
+%vfile65 = [path, 'dummy65.txt'];
+%vfile70 = [path, 'dummy70.txt'];
+%vfile75 = [path, 'dummy75.txt'];
+%vfile80 = [path, 'dummy80.txt'];
 
 %vdata0 = importdata(vfile0, ' ', 0);
 vdata1 = importdata(vfile1, ' ', 0);
@@ -31,12 +31,12 @@ vdata35 = importdata(vfile35, ' ', 0);
 vdata40 = importdata(vfile40, ' ', 0);
 vdata45 = importdata(vfile45, ' ', 0);
 vdata50 = importdata(vfile50, ' ', 0);
-vdata55 = importdata(vfile55, ' ', 0);
-vdata60 = importdata(vfile60, ' ', 0);
-vdata65 = importdata(vfile65, ' ', 0);
-vdata70 = importdata(vfile70, ' ', 0);
-vdata75 = importdata(vfile75, ' ', 0);
-vdata80 = importdata(vfile80, ' ', 0);
+%vdata55 = importdata(vfile55, ' ', 0);
+%vdata60 = importdata(vfile60, ' ', 0);
+%vdata65 = importdata(vfile65, ' ', 0);
+%vdata70 = importdata(vfile70, ' ', 0);
+%vdata75 = importdata(vfile75, ' ', 0);
+%vdata80 = importdata(vfile80, ' ', 0);
 
 delta = vdata1(:, 1);
 
@@ -88,29 +88,29 @@ conn_len50 = vdata50(:, 2);
 fx50 = vdata50(:, 3);
 dosp50 = vdata50(:, 9);
 
-conn_len55 = vdata55(:, 2);
-fx55 = vdata55(:, 3);
-dosp55 = vdata55(:, 9);
+%conn_len55 = vdata55(:, 2);
+%fx55 = vdata55(:, 3);
+%dosp55 = vdata55(:, 9);
 
-conn_len60 = vdata60(:, 2);
-fx60 = vdata60(:, 3);
-dosp60 = vdata60(:, 9);
+%conn_len60 = vdata60(:, 2);
+%fx60 = vdata60(:, 3);
+%dosp60 = vdata60(:, 9);
 
-conn_len65 = vdata75(:, 2);
-fx65 = vdata65(:, 3);
-dosp65 = vdata65(:, 9);
+%conn_len65 = vdata75(:, 2);
+%fx65 = vdata65(:, 3);
+%dosp65 = vdata65(:, 9);
 
-conn_len70 = vdata70(:, 2);
-fx70 = vdata70(:, 3);
-dosp70 = vdata70(:, 9);
+%conn_len70 = vdata70(:, 2);
+%fx70 = vdata70(:, 3);
+%dosp70 = vdata70(:, 9);
 
-conn_len75 = vdata75(:, 2);
-fx75 = vdata75(:, 3);
-dosp75 = vdata75(:, 9);
+%conn_len75 = vdata75(:, 2);
+%fx75 = vdata75(:, 3);
+%dosp75 = vdata75(:, 9);
 
-conn_len80 = vdata80(:, 2);
-fx80 = vdata80(:, 3);
-dosp80 = vdata80(:, 9);
+%conn_len80 = vdata80(:, 2);
+%fx80 = vdata80(:, 3);
+%dosp80 = vdata80(:, 9);
 
 %delta2 = [delta', linspace(-36, -55, 20)]';
 figure('Units','normalized','PaperPositionMode','auto')

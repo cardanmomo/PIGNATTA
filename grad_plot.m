@@ -1,5 +1,5 @@
 % Plotter to work with sensitivity explorer
-path = '/home/cmoreno/work/';
+path = '/home/cmoreno/work/equil_displacements/SXDtoCD/original/';
 %vfile0 = [path, 'dummy0.txt'];
 vfile1 = [path, 'dummy1.txt'];
 vfile5 = [path, 'dummy5.txt'];
@@ -14,7 +14,6 @@ vfile35 = [path, 'dummy35.txt'];
 vfile40 = [path, 'dummy40.txt'];
 vfile45 = [path, 'dummy45.txt'];
 vfile50 = [path, 'dummy50.txt'];
-vfile55 = [path, 'dummy55.txt'];
 
 %vdata0 = importdata(vfile0, ' ', 0);
 vdata1 = importdata(vfile1, ' ', 0);
@@ -30,7 +29,6 @@ vdata35 = importdata(vfile35, ' ', 0);
 vdata40 = importdata(vfile40, ' ', 0);
 vdata45 = importdata(vfile45, ' ', 0);
 vdata50 = importdata(vfile50, ' ', 0);
-vdata55 = importdata(vfile55, ' ', 0);
 
 delta = vdata1(:, 1);
 
@@ -89,10 +87,6 @@ dosp45 = vdata45(:, 9);
 conn_len50 = vdata50(:, 2);
 fx50 = vdata50(:, 3);
 dosp50 = vdata50(:, 9);
-
-conn_len55 = vdata55(:, 2);
-fx55 = vdata55(:, 3);
-dosp55 = vdata55(:, 9);
 
 %delta2 = [delta', linspace(-36, -55, 20)]';
 figure
