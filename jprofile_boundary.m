@@ -160,7 +160,7 @@ weights={700, 500, 240, 320, 20, 48, 200, 100, 220, 220, 220};
 % Get free coils
 free_coils={,'p4','p5','px','d1','d2','d3','d5','d6','dp','pc'};
 icoil=get(equil, 'icoil');
-%icoil.p1 = -20e3;
+icoil.p1 = 0e3;
 
 circuit_labels=get(config, 'circuit_labels');
 free_coils_index=zeros(1,length(free_coils));
@@ -177,8 +177,8 @@ inputs={coilset};
 initial_plasma=get(config, 'initial_plasma');
 efit_config=fiesta_efit_configuration(grid, inputs, outputs, ...
     free_inputs, relaxation_parameter);
-%equil_new=fiesta_equilibrium('test', config, irod, jprofile, control_efit, ...
-%    efit_config, icoil, obs, weights);
+equil_new=fiesta_equilibrium('test', config, irod, jprofile, control_efit, ...
+    efit_config, icoil, obs, weights);
 
 
 dos_a =     [0.4,               -3,                 10,                 -9]                 *1e7;
